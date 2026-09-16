@@ -1,0 +1,482 @@
+{
+  "training": [
+    {
+      "id": "train-simple-0",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-1",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-2",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-3",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-4",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-5",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-6",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-7",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-8",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-9",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-10",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-simple-11",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-0",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-1",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-2",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-3",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-4",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-5",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-6",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-7",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-8",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-9",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-10",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "train-complex-11",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    }
+  ],
+  "evaluation": [
+    {
+      "id": "eval-0",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-1",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-2",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-3",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-4",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-5",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-6",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-7",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-8",
+      "context": "simple",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": true
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    },
+    {
+      "id": "eval-9",
+      "context": "complex",
+      "models": {
+        "small": {
+          "cost_micro": 1,
+          "success": false
+        },
+        "large": {
+          "cost_micro": 5,
+          "success": true
+        }
+      }
+    }
+  ]
+}
