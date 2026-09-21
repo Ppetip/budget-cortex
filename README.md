@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-30 tests pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+33 tests pass locally on Python 3.13; updated hosted verification is pending.
 
 ## Architecture
 
@@ -106,3 +106,7 @@ Jev context classification feeds the synthetic router; a zero budget still absta
 For a genuinely new allowance only, run `python jev_client.py --init-budget /absolute/path/to/jev-budget.sqlite3` once, then use that exact path in `JEV_BUDGET_DB` for every app. Initialization refuses existing files, including empty files. Do not initialize a new ledger to replace lost spending history. Existing users keep their existing ledger and skip setup.
 
 Live clients now open existing ledgers only, including at reservation time. A missing, mistyped, or empty ledger stops calls instead of silently recreating a zero balance. Restore missing history from a trusted backup; do not reset it. This prevents accidental recreation, not deliberate administrator modification or substitution of a different valid database.
+
+## Latest reliability improvement
+
+The reusable `Router.choose` entry point now rejects negative, fractional and boolean costs, invalid remaining budgets, and invalid quality targets. Valid zero-cost routes remain supported. Cost units in this offline router remain synthetic; the Jev account ledger is separate.

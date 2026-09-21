@@ -51,6 +51,16 @@ class Router:
         return (sum(w for w, _ in entries) + 1) / (count + 2) if count else None
 
     def choose(self, context, costs, remaining, target):
+        if not isinstance(context, str) or not context:
+            raise ValueError("context required")
+        if (not isinstance(costs, dict) or not costs
+                or any(not isinstance(name, str) or not name or type(cost) is not int or cost < 0
+                       for name, cost in costs.items())):
+            raise ValueError("named nonnegative integer costs required")
+        if type(remaining) is not int or remaining < 0:
+            raise ValueError("remaining budget must be a nonnegative integer")
+        if type(target) not in (int, float) or not 0 <= target <= 1:
+            raise ValueError("target must lie between zero and one")
         choices = [(cost, name) for name, cost in costs.items()
                    if cost <= remaining and self.quality(context, name) is not None
                    and self.quality(context, name) >= target]

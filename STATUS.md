@@ -1,11 +1,11 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 30 offline tests pass; dry run and live synthetic Jev workflow pass.
+Verified: 33 offline tests pass; dry run and live synthetic Jev workflow pass.
 
-Latest: Jev context classification feeds the synthetic router; a zero budget still abstains.
+Latest: Direct Router.choose calls validate costs, remaining budget and quality targets before selection.
 
-Next: Evaluate classification errors and delayed feedback with clearly separate provider and simulated costs.
+Next: Evaluate delayed feedback and context-classification errors.
 
 Repository: https://github.com/Ppetip/budget-cortex
 Budget: one shared $3 cumulative Jev allowance across the portfolio, never per project or cycle.
@@ -20,3 +20,5 @@ Hosted verification: https://github.com/Ppetip/budget-cortex/actions/runs/355902
 2026-09-21 14:42 UTC budget fix: live clients require an existing ledger; explicit initialization refuses overwrite. Added four regression cases for missing/deleted/empty ledgers and preserved spending. All local tests, CLI checks, and four hosted Windows/Linux Python 3.11/3.13 jobs pass. No additional Jev calls.
 
 Budget-fix hosted verification: https://github.com/Ppetip/budget-cortex/actions/runs/35614384278
+
+2026-09-21 18:44 UTC: Direct Router.choose calls validate costs, remaining budget and quality targets before selection. Local tests and offline CLI checks pass; updated hosted matrix pending. No additional Jev calls.
