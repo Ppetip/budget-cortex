@@ -110,3 +110,5 @@ Live clients now open existing ledgers only, including at reservation time. A mi
 ## Latest reliability improvement
 
 The reusable `Router.choose` entry point now rejects negative, fractional and boolean costs, invalid remaining budgets, and invalid quality targets. Valid zero-cost routes remain supported. Cost units in this offline router remain synthetic; the Jev account ledger is separate.
+
+See [Reading results](docs/RESULTS.md) for outcome fields, denominators, abstentions and the limits of command success.
