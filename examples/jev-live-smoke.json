@@ -1,0 +1,16 @@
+{
+  "mode": "live-model-on-synthetic-data",
+  "model": "jev-1.13.0",
+  "context": "simple",
+  "selected_model": "small",
+  "model_with_zero_budget": null,
+  "synthetic_routing_budget_micro": 2,
+  "usage": [
+    {
+      "input_tokens": 388,
+      "output_tokens": 40
+    }
+  ],
+  "limitation": "Live context classification feeds an offline router. Routing prices/outcomes are synthetic; Jev spending is accounted separately. No selected model is called.",
+  "recorded_at_utc": "2026-09-21"
+}
