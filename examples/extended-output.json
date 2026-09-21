@@ -4,7 +4,7 @@
   "comparisons": [
     {
       "policy": "adaptive",
-      "selected_feedback_learning": false,
+      "selected_feedback_learning": true,
       "budget_micro": 22,
       "spent_micro": 20,
       "answered": 8,

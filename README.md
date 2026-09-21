@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-10 tests passed locally on Python 3.13. Other Python versions have not yet been exercised.
+14 tests passed locally on Python 3.13. Other Python versions have not yet been exercised.
 
 ## Architecture
 
@@ -54,3 +54,9 @@ Set an acceptable failure rate and identify requests where a wrong answer is wor
 ## License
 
 Copyright (c) 2026 Ppetip. Original code is licensed under GNU GPL version 3 only; see [LICENSE](LICENSE).
+
+## Latest development pass
+
+Optional learning consumes only the chosen model outcome.
+
+Run `python app.py --learn`. Updates are immediate; no exploration, delayed feedback or calibrated quality guarantee.

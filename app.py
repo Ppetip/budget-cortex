@@ -33,6 +33,14 @@ class Router:
                 wins, count = self.stats.get(key, (0, 0))
                 self.stats[key] = (wins + outcome["success"], count + 1)
 
+    def observe(self, context, name, success):
+        """Consume only the chosen model's immediate feedback."""
+        if not isinstance(context, str) or not context or not isinstance(name, str) or not name or type(success) is not bool:
+            raise ValueError("context, model name and boolean feedback required")
+        key = (context, name)
+        wins, count = self.stats.get(key, (0, 0))
+        self.stats[key] = (wins + success, count + 1)
+
     def quality(self, context, name):
         wins, count = self.stats.get((context, name), (0, 0))
         return (wins + 1) / (count + 2) if count else None
@@ -49,7 +57,7 @@ class Router:
         return min(choices)[1] if choices else None
 
 
-def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive"):
+def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", learn=False):
     if type(budget_micro) is not int or budget_micro < 0:
         raise ValueError("nonnegative integer budget required")
     if type(target) not in (int, float) or not 0 <= target <= 1:
@@ -82,8 +90,10 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive"):
         remaining -= outcome["cost_micro"]
         answered += 1
         wins += outcome["success"]
+        if learn and policy == "adaptive":
+            router.observe(row["context"], model, outcome["success"])
         decisions.append({"id": row["id"], "model": model, **outcome})
-    return {"policy": policy, "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
+    return {"policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
             "answered": answered, "abstained": len(requests) - answered,
             "success_rate_answered": wins / answered if answered else None,
             "success_rate_all": wins / len(requests) if requests else None,
@@ -106,6 +116,7 @@ def main():
     parser.add_argument("--input", type=Path, help="JSON with training and evaluation arrays")
     parser.add_argument("--budget", type=int, default=22)
     parser.add_argument("--target", type=float, default=.7)
+    parser.add_argument("--learn", action="store_true", help="Update adaptive estimates from chosen-model feedback only")
     args = parser.parse_args()
     if args.input:
         data = json.loads(args.input.read_text(encoding="utf-8"))
@@ -114,7 +125,7 @@ def main():
         train, test = demo()
     print(json.dumps({"data": "synthetic-demo" if not args.input else "user-supplied-offline-outcomes",
                       "limitation": "Fully observed offline simulation. Estimates are not calibrated guarantees. Prices are synthetic micro-units, not provider prices. No live routing or bandit learning yet.",
-                      "comparisons": [evaluate(train, test, args.budget, args.target, p)
+                      "comparisons": [evaluate(train, test, args.budget, args.target, p, learn=args.learn)
                                       for p in ("adaptive", "cheapest", "strongest")]}, indent=2))
 
 
