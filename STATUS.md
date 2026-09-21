@@ -21,4 +21,6 @@ Hosted verification: https://github.com/Ppetip/budget-cortex/actions/runs/355902
 
 Budget-fix hosted verification: https://github.com/Ppetip/budget-cortex/actions/runs/35614384278
 
-2026-09-21 18:44 UTC: Direct Router.choose calls validate costs, remaining budget and quality targets before selection. Local tests and offline CLI checks pass; updated hosted matrix pending. No additional Jev calls.
+2026-09-21 18:44 UTC: Direct Router.choose calls validate costs, remaining budget and quality targets before selection. Local tests, offline CLI checks, and all four hosted matrix jobs pass. No additional Jev calls.
+
+Feature-pass verification: https://github.com/Ppetip/budget-cortex/actions/runs/35640895462
