@@ -88,6 +88,7 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
         pending = [item for item in pending if item[0] > index]
         for _, context, name, success in ready:
             router.observe(context, name, success)
+        feedback_received = len(ready)
         costs = {name: out["cost_micro"] for name, out in row["models"].items()}
         if policy == "adaptive":
             model = router.choose(row["context"], costs, remaining, target)
@@ -99,8 +100,10 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
             model = max(known)[2] if known else None
         if model is not None and costs[model] > remaining:
             model = None
+        audit = {"feedback_received_before_selection": feedback_received,
+                 "quality_at_selection": router.quality(row["context"], model) if model is not None else None}
         if model is None:
-            decisions.append({"id": row["id"], "model": None, "cost_micro": 0})
+            decisions.append({"id": row["id"], "model": None, "cost_micro": 0, **audit})
             continue
         outcome = row["models"][model]
         remaining -= outcome["cost_micro"]
@@ -111,7 +114,7 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
                 router.observe(row["context"], model, outcome["success"])
             else:
                 pending.append((index + feedback_delay + 1, row["context"], model, outcome["success"]))
-        decisions.append({"id": row["id"], "model": model, **outcome})
+        decisions.append({"id": row["id"], "model": model, **outcome, **audit})
     return {"feedback_delay": feedback_delay, "pending_feedback": len(pending), "policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
             "answered": answered, "abstained": len(requests) - answered,
             "success_rate_answered": wins / answered if answered else None,

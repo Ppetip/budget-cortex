@@ -1,9 +1,9 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 36 offline tests pass; dry run and live synthetic Jev workflow pass.
+Verified: 39 offline tests pass; dry run and live synthetic Jev workflow pass.
 
-Latest: Selected feedback can arrive after additional requests, with undelivered feedback counted.
+Latest: Each decision records `quality_at_selection`, the contextual smoothed estimate before applying that request's outcome, and `feedback_received_before_selection`, the number of delayed outcomes released immediately before this choice.
 
 Next: Evaluate distribution shifts and delayed labels on independently specified outcomes.
 
@@ -30,3 +30,5 @@ Feature-pass verification: https://github.com/Ppetip/budget-cortex/actions/runs/
 2026-09-22 02:46 UTC: Selected feedback can arrive after additional requests, with undelivered feedback counted. Common-runner checks, new route and all four hosted jobs pass. No new Jev calls.
 
 Evaluation-path verification: https://github.com/Ppetip/budget-cortex/actions/runs/35681198428
+
+2026-09-22 10:48 UTC: Each decision records `quality_at_selection`, the contextual smoothed estimate before applying that request's outcome, and `feedback_received_before_selection`, the number of delayed outcomes released immediately before this choice. Immediate feedback is applied after its own choice and is not counted as a delayed release. Abstentions retain release counts and use a null selected-model estimate. For the strongest baseline, this contextual estimate is diagnostic; selection still uses global quality. Estimates are not calibrated guarantees. Local tests pass; publication and hosted verification pending. No new Jev calls.

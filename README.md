@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-36 tests pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+39 tests pass locally on Windows with Python 3.13; hosted verification for this update is pending.
 
 ## Architecture
 
@@ -116,3 +116,7 @@ See [Reading results](docs/RESULTS.md) for outcome fields, denominators, abstent
 ## New evaluation path
 
 Run `python app.py --learn --feedback-delay 2`. Delay counts additional intervening requests: a result selected at index i with delay d > 0 becomes visible before index i+d+1. Delay zero keeps immediate after-selection updates. Late feedback remains pending at the end; no hidden flush is used for decisions. Feedback affects only adaptive learning, and spending is still charged when a model is selected. These are offline outcome simulations.
+
+## Evaluation reliability
+
+Each decision records `quality_at_selection`, the contextual smoothed estimate before applying that request's outcome, and `feedback_received_before_selection`, the number of delayed outcomes released immediately before this choice. Immediate feedback is applied after its own choice and is not counted as a delayed release. Abstentions retain release counts and use a null selected-model estimate. For the strongest baseline, this contextual estimate is diagnostic; selection still uses global quality. Estimates are not calibrated guarantees.
