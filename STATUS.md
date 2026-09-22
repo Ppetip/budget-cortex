@@ -27,4 +27,6 @@ Feature-pass verification: https://github.com/Ppetip/budget-cortex/actions/runs/
 
 2026-09-21 22:45 UTC: documented how to interpret this tool's outcomes separately from command success. The local Codex runner now shows a concise outcome summary for this project. Verified through common-runner checks and synthetic demo output; histories stay local.
 
-2026-09-22 02:46 UTC: Selected feedback can arrive after additional requests, with undelivered feedback counted. Common-runner checks and new route pass locally; hosted verification pending. No new Jev calls.
+2026-09-22 02:46 UTC: Selected feedback can arrive after additional requests, with undelivered feedback counted. Common-runner checks, new route and all four hosted jobs pass. No new Jev calls.
+
+Evaluation-path verification: https://github.com/Ppetip/budget-cortex/actions/runs/35681198428
