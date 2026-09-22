@@ -1,11 +1,11 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 39 offline tests pass; dry run and live synthetic Jev workflow pass.
+Verified: 42 offline tests pass; dry run and live synthetic Jev workflow pass.
 
-Latest: Each decision records `quality_at_selection`, the contextual smoothed estimate before applying that request's outcome, and `feedback_received_before_selection`, the number of delayed outcomes released immediately before this choice.
+Latest: Run `python shift.py` (Codex route `shift`).
 
-Next: Evaluate distribution shifts and delayed labels on independently specified outcomes.
+Next: Add varied independently authored shift patterns and explicit uncertainty before expanding routing claims.
 
 Repository: https://github.com/Ppetip/budget-cortex
 Budget: one shared $3 cumulative Jev allowance across the portfolio, never per project or cycle.
@@ -34,3 +34,5 @@ Evaluation-path verification: https://github.com/Ppetip/budget-cortex/actions/ru
 2026-09-22 10:48 UTC: Each decision records `quality_at_selection`, the contextual smoothed estimate before applying that request's outcome, and `feedback_received_before_selection`, the number of delayed outcomes released immediately before this choice. Immediate feedback is applied after its own choice and is not counted as a delayed release. Abstentions retain release counts and use a null selected-model estimate. For the strongest baseline, this contextual estimate is diagnostic; selection still uses global quality. Estimates are not calibrated guarantees. Published and verified: local checks and all four hosted matrix jobs pass. No new Jev calls.
 
 Reliability verification: https://github.com/Ppetip/budget-cortex/actions/runs/35718645844
+
+2026-09-22 22:50 UTC: Run `python shift.py` (Codex route `shift`). This authored scenario makes the small model fail after request four while keeping the visible context constant. Across eight later requests, frozen estimates succeed 0/8, immediate feedback 5/8 and delayed feedback 3/8; total costs across all 12 requests are 12, 27 and 21 synthetic units respectively. The cheap and strongest-by-training baselines both choose small here: training qualities tie, and strongest breaks ties by lower cost. These are controlled offline outcomes, not measured model degradation. See `examples/extended-evaluation.json`. Common-runner checks pass. Publication and hosted verification pending. No new Jev calls.

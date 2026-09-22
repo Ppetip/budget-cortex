@@ -10,6 +10,8 @@ COMMANDS = [['app.py'], ['jev_workflow.py'], ['app.py', '--learn']]
 
 COMMANDS.append(['app.py', '--learn', '--feedback-delay', '2'])
 
+COMMANDS.append(['shift.py'])
+
 def main():
     for args in COMMANDS:
         result = subprocess.run([sys.executable, *args], cwd=ROOT, capture_output=True,
