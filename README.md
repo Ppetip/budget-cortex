@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-33 tests pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+36 tests pass locally on Python 3.13; updated hosted matrix pending.
 
 ## Architecture
 
@@ -112,3 +112,7 @@ Live clients now open existing ledgers only, including at reservation time. A mi
 The reusable `Router.choose` entry point now rejects negative, fractional and boolean costs, invalid remaining budgets, and invalid quality targets. Valid zero-cost routes remain supported. Cost units in this offline router remain synthetic; the Jev account ledger is separate.
 
 See [Reading results](docs/RESULTS.md) for outcome fields, denominators, abstentions and the limits of command success.
+
+## New evaluation path
+
+Run `python app.py --learn --feedback-delay 2`. Delay counts additional intervening requests: a result selected at index i with delay d > 0 becomes visible before index i+d+1. Delay zero keeps immediate after-selection updates. Late feedback remains pending at the end; no hidden flush is used for decisions. Feedback affects only adaptive learning, and spending is still charged when a model is selected. These are offline outcome simulations.

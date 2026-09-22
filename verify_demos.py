@@ -8,6 +8,8 @@ import sys
 ROOT = Path(__file__).resolve().parent
 COMMANDS = [['app.py'], ['jev_workflow.py'], ['app.py', '--learn']]
 
+COMMANDS.append(['app.py', '--learn', '--feedback-delay', '2'])
+
 def main():
     for args in COMMANDS:
         result = subprocess.run([sys.executable, *args], cwd=ROOT, capture_output=True,

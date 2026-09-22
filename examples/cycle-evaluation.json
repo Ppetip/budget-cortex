@@ -1,0 +1,220 @@
+{
+  "data": "synthetic-demo",
+  "limitation": "Fully observed offline simulation. Estimates are not calibrated guarantees. Prices are synthetic micro-units, not provider prices. No live routing or bandit learning yet.",
+  "comparisons": [
+    {
+      "feedback_delay": 2,
+      "pending_feedback": 1,
+      "policy": "adaptive",
+      "selected_feedback_learning": true,
+      "budget_micro": 22,
+      "spent_micro": 20,
+      "answered": 8,
+      "abstained": 2,
+      "success_rate_answered": 1.0,
+      "success_rate_all": 0.8,
+      "decisions": [
+        {
+          "id": "eval-0",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-1",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-2",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-3",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-4",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-5",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-6",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-7",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-8",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-9",
+          "model": null,
+          "cost_micro": 0
+        }
+      ]
+    },
+    {
+      "feedback_delay": 2,
+      "pending_feedback": 0,
+      "policy": "cheapest",
+      "selected_feedback_learning": false,
+      "budget_micro": 22,
+      "spent_micro": 10,
+      "answered": 10,
+      "abstained": 0,
+      "success_rate_answered": 0.5,
+      "success_rate_all": 0.5,
+      "decisions": [
+        {
+          "id": "eval-0",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-1",
+          "model": "small",
+          "cost_micro": 1,
+          "success": false
+        },
+        {
+          "id": "eval-2",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-3",
+          "model": "small",
+          "cost_micro": 1,
+          "success": false
+        },
+        {
+          "id": "eval-4",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-5",
+          "model": "small",
+          "cost_micro": 1,
+          "success": false
+        },
+        {
+          "id": "eval-6",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-7",
+          "model": "small",
+          "cost_micro": 1,
+          "success": false
+        },
+        {
+          "id": "eval-8",
+          "model": "small",
+          "cost_micro": 1,
+          "success": true
+        },
+        {
+          "id": "eval-9",
+          "model": "small",
+          "cost_micro": 1,
+          "success": false
+        }
+      ]
+    },
+    {
+      "feedback_delay": 2,
+      "pending_feedback": 0,
+      "policy": "strongest",
+      "selected_feedback_learning": false,
+      "budget_micro": 22,
+      "spent_micro": 20,
+      "answered": 4,
+      "abstained": 6,
+      "success_rate_answered": 1.0,
+      "success_rate_all": 0.4,
+      "decisions": [
+        {
+          "id": "eval-0",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-1",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-2",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-3",
+          "model": "large",
+          "cost_micro": 5,
+          "success": true
+        },
+        {
+          "id": "eval-4",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-5",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-6",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-7",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-8",
+          "model": null,
+          "cost_micro": 0
+        },
+        {
+          "id": "eval-9",
+          "model": null,
+          "cost_micro": 0
+        }
+      ]
+    }
+  ]
+}

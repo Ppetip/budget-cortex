@@ -67,21 +67,27 @@ class Router:
         return min(choices)[1] if choices else None
 
 
-def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", learn=False):
+def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", learn=False, feedback_delay=0):
     if type(budget_micro) is not int or budget_micro < 0:
         raise ValueError("nonnegative integer budget required")
     if type(target) not in (int, float) or not 0 <= target <= 1:
         raise ValueError("target must lie between zero and one")
     if policy not in {"adaptive", "cheapest", "strongest"}:
         raise ValueError("unknown policy")
+    if type(learn) is not bool or type(feedback_delay) is not int or feedback_delay < 0:
+        raise ValueError("boolean learn and nonnegative integer feedback_delay required")
     validate(training)
     validate(requests)
     if {r["id"] for r in training} & {r["id"] for r in requests}:
         raise ValueError("training/evaluation ID overlap")
     router = Router(training)
     remaining, wins, answered = budget_micro, 0, 0
-    decisions = []
-    for row in requests:
+    decisions, pending = [], []
+    for index, row in enumerate(requests):
+        ready = [item for item in pending if item[0] <= index]
+        pending = [item for item in pending if item[0] > index]
+        for _, context, name, success in ready:
+            router.observe(context, name, success)
         costs = {name: out["cost_micro"] for name, out in row["models"].items()}
         if policy == "adaptive":
             model = router.choose(row["context"], costs, remaining, target)
@@ -101,9 +107,12 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
         answered += 1
         wins += outcome["success"]
         if learn and policy == "adaptive":
-            router.observe(row["context"], model, outcome["success"])
+            if feedback_delay == 0:
+                router.observe(row["context"], model, outcome["success"])
+            else:
+                pending.append((index + feedback_delay + 1, row["context"], model, outcome["success"]))
         decisions.append({"id": row["id"], "model": model, **outcome})
-    return {"policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
+    return {"feedback_delay": feedback_delay, "pending_feedback": len(pending), "policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
             "answered": answered, "abstained": len(requests) - answered,
             "success_rate_answered": wins / answered if answered else None,
             "success_rate_all": wins / len(requests) if requests else None,
@@ -127,6 +136,7 @@ def main():
     parser.add_argument("--budget", type=int, default=22)
     parser.add_argument("--target", type=float, default=.7)
     parser.add_argument("--learn", action="store_true", help="Update adaptive estimates from chosen-model feedback only")
+    parser.add_argument("--feedback-delay", type=int, default=0, help="Additional requests before selected feedback arrives")
     args = parser.parse_args()
     if args.input:
         data = json.loads(args.input.read_text(encoding="utf-8"))
@@ -135,7 +145,7 @@ def main():
         train, test = demo()
     print(json.dumps({"data": "synthetic-demo" if not args.input else "user-supplied-offline-outcomes",
                       "limitation": "Fully observed offline simulation. Estimates are not calibrated guarantees. Prices are synthetic micro-units, not provider prices. No live routing or bandit learning yet.",
-                      "comparisons": [evaluate(train, test, args.budget, args.target, p, learn=args.learn)
+                      "comparisons": [evaluate(train, test, args.budget, args.target, p, learn=args.learn, feedback_delay=args.feedback_delay)
                                       for p in ("adaptive", "cheapest", "strongest")]}, indent=2))
 
 
