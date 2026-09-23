@@ -5,6 +5,8 @@ from pathlib import Path
 
 
 def validate(rows):
+    if not isinstance(rows, list):
+        raise ValueError("outcome rows must be an array")
     ids = set()
     for row in rows:
         if not isinstance(row, dict) or not isinstance(row.get("id"), str) or not row["id"] or row["id"] in ids:
@@ -15,7 +17,7 @@ def validate(rows):
         if not isinstance(row.get("models"), dict) or not row["models"]:
             raise ValueError("model outcomes required")
         for name, out in row["models"].items():
-            if not name or not isinstance(out, dict):
+            if not isinstance(name, str) or not name or not isinstance(out, dict):
                 raise ValueError("named model outcome required")
             if type(out.get("cost_micro")) is not int or out["cost_micro"] < 0:
                 raise ValueError("cost_micro must be a nonnegative integer")
@@ -114,7 +116,8 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
                 router.observe(row["context"], model, outcome["success"])
             else:
                 pending.append((index + feedback_delay + 1, row["context"], model, outcome["success"]))
-        decisions.append({"id": row["id"], "model": model, **outcome, **audit})
+        decisions.append({"id": row["id"], "model": model,
+                          "cost_micro": outcome["cost_micro"], "success": outcome["success"], **audit})
     return {"feedback_delay": feedback_delay, "pending_feedback": len(pending), "policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
             "answered": answered, "abstained": len(requests) - answered,
             "success_rate_answered": wins / answered if answered else None,

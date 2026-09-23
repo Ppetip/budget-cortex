@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-42 tests pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+45 tests pass locally; hosted verification for this input-boundary update is pending.
 
 ## Architecture
 
@@ -124,3 +124,7 @@ Each decision records `quality_at_selection`, the contextual smoothed estimate b
 ## Extended evaluation
 
 Run `python shift.py` (Codex route `shift`). This authored scenario makes the small model fail after request four while keeping the visible context constant. Across eight later requests, frozen estimates succeed 0/8, immediate feedback 5/8 and delayed feedback 3/8; total costs across all 12 requests are 12, 27 and 21 synthetic units respectively. The cheap and strongest-by-training baselines both choose small here: training qualities tie, and strongest breaks ties by lower cost. These are controlled offline outcomes, not measured model degradation. See `examples/extended-evaluation.json`.
+
+## Input boundaries
+
+Routing reports now select only validated cost/success fields from outcome records. Extra metadata cannot override the reported request ID, chosen model or estimate, and unused fields are excluded from results. Outcome collections must be arrays and model names must be nonempty strings before baseline comparisons. Offline synthetic cost units remain separate from live provider accounting.

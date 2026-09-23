@@ -1,9 +1,9 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 42 offline tests pass; dry run and live synthetic Jev workflow pass.
+Verified: 45 offline tests pass locally; hosted verification pending. Previous Jev smoke checks remain historical.
 
-Latest: Run `python shift.py` (Codex route `shift`).
+Latest: Routing reports now select only validated cost/success fields from outcome records.
 
 Next: Add varied independently authored shift patterns and explicit uncertainty before expanding routing claims.
 
@@ -38,3 +38,5 @@ Reliability verification: https://github.com/Ppetip/budget-cortex/actions/runs/3
 2026-09-22 22:50 UTC: Run `python shift.py` (Codex route `shift`). This authored scenario makes the small model fail after request four while keeping the visible context constant. Across eight later requests, frozen estimates succeed 0/8, immediate feedback 5/8 and delayed feedback 3/8; total costs across all 12 requests are 12, 27 and 21 synthetic units respectively. The cheap and strongest-by-training baselines both choose small here: training qualities tie, and strongest breaks ties by lower cost. These are controlled offline outcomes, not measured model degradation. See `examples/extended-evaluation.json`. Common-runner checks pass. Published and verified: all four hosted Windows/Linux Python 3.11/3.13 jobs pass. No new Jev calls.
 
 Extended evaluation verification: https://github.com/Ppetip/budget-cortex/actions/runs/35795065445
+
+2026-09-23 06:53 UTC: Routing reports now select only validated cost/success fields from outcome records. Extra metadata cannot override the reported request ID, chosen model or estimate, and unused fields are excluded from results. Outcome collections must be arrays and model names must be nonempty strings before baseline comparisons. Offline synthetic cost units remain separate from live provider accounting. Checks pass; run ID b22f20218a6342da9a68daa7d1a24217. No live calls. Hosted verification pending.
