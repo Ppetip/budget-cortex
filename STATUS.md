@@ -1,7 +1,7 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 45 offline tests pass locally; hosted verification pending. Previous Jev smoke checks remain historical.
+Verified: 45 offline tests and all four hosted matrix jobs pass. Jev smoke results remain historical; no new live calls.
 
 Latest: Routing reports now select only validated cost/success fields from outcome records.
 
@@ -39,4 +39,6 @@ Reliability verification: https://github.com/Ppetip/budget-cortex/actions/runs/3
 
 Extended evaluation verification: https://github.com/Ppetip/budget-cortex/actions/runs/35795065445
 
-2026-09-23 06:53 UTC: Routing reports now select only validated cost/success fields from outcome records. Extra metadata cannot override the reported request ID, chosen model or estimate, and unused fields are excluded from results. Outcome collections must be arrays and model names must be nonempty strings before baseline comparisons. Offline synthetic cost units remain separate from live provider accounting. Checks pass; run ID b22f20218a6342da9a68daa7d1a24217. No live calls. Hosted verification pending.
+2026-09-23 06:53 UTC: Routing reports now select only validated cost/success fields from outcome records. Extra metadata cannot override the reported request ID, chosen model or estimate, and unused fields are excluded from results. Outcome collections must be arrays and model names must be nonempty strings before baseline comparisons. Offline synthetic cost units remain separate from live provider accounting. Checks pass; run ID b22f20218a6342da9a68daa7d1a24217. No live calls. Hosted verification passed on all four OS/Python combinations.
+
+2026-09-23 10:54 UTC verification follow-up: Published code and all four hosted jobs verified after the earlier approval-review usage-limit interruption. Existing check suites were not rerun solely to create history. Run: https://github.com/Ppetip/budget-cortex/actions/runs/35829392965
