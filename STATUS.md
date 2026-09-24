@@ -1,11 +1,11 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 45 offline tests and all four hosted matrix jobs pass. Jev smoke results remain historical; no new live calls.
+Verified: 51 offline tests and five CLI paths pass locally; hosted checks for this change pending. Jev smoke results remain historical; no new live calls.
 
-Latest: Routing reports now select only validated cost/success fields from outcome records.
+Latest: Decisions expose pre-outcome support counts with contextual or global scope.
 
-Next: Add varied independently authored shift patterns and explicit uncertainty before expanding routing claims.
+Next: Evaluate independently authored shift patterns and observed outcomes; support counts do not establish statistical uncertainty or live reliability.
 
 Repository: https://github.com/Ppetip/budget-cortex
 Budget: one shared $3 cumulative Jev allowance across the portfolio, never per project or cycle.
@@ -44,3 +44,5 @@ Extended evaluation verification: https://github.com/Ppetip/budget-cortex/action
 2026-09-23 10:54 UTC verification follow-up: Published code and all four hosted jobs verified after the earlier approval-review usage-limit interruption. Existing check suites were not rerun solely to create history. Run: https://github.com/Ppetip/budget-cortex/actions/runs/35829392965
 
 2026-09-23 14:55 UTC: Added guidance for interpreting saved-check freshness in the optional local Codex runner. A current check validates offline routing and accounting code. It does not establish live model quality or authorize this router to override Jev. The shared runner now records check-source fingerprints and provides read-only status. All five current app checks passed (234 tests total), along with 24 local runner regressions. Run ID: 811900b822db42e390b5e1714afbbe25. App implementation unchanged; this documentation update skips redundant hosted CI. No live calls or new performance claim.
+
+2026-09-24 06:59 UTC: Added selection_evidence snapshots with successes, observations, smoothed estimate and context/global scope. Counts include training plus feedback released before selection; cheapest choices and abstentions have null evidence. Existing routing behavior and contextual diagnostic remain unchanged. No provider calls or additional spending. Local checks pass; run ID 66f2c076ef004e688889f27a261f2c01. Hosted verification pending.

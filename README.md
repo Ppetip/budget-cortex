@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-45 tests pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+51 tests and five offline CLI paths pass locally; hosted verification for selection evidence is pending.
 
 ## Architecture
 
@@ -128,3 +128,11 @@ Run `python shift.py` (Codex route `shift`). This authored scenario makes the sm
 ## Input boundaries
 
 Routing reports now select only validated cost/success fields from outcome records. Extra metadata cannot override the reported request ID, chosen model or estimate, and unused fields are excluded from results. Outcome collections must be arrays and model names must be nonempty strings before baseline comparisons. Offline synthetic cost units remain separate from live provider accounting.
+
+## Evidence behind a selection
+
+Each decision includes `selection_evidence`, captured before consuming its own outcome. For adaptive routing it contains `scope: "context"`, `successes`, `observations`, and `smoothed_estimate` for the chosen model in that context. For the strongest baseline, `scope: "global"` pools that model's observations across training contexts. The estimate is `(successes + 1) / (observations + 2)`; the counts exclude those two smoothing pseudo-observations. Only released feedback can increase the counts. With frozen evaluation, only training outcomes contribute.
+
+For example, one observed success produces an estimate of 2/3 with `observations: 1`; the sample count makes that limited support visible. Cheapest selections and abstentions report null evidence because no quality-based model selection was made. Existing `quality_at_selection` remains a contextual diagnostic even for the strongest or cheapest baseline. Use the new field to inspect the actual quality scope used for selection.
+
+The routing rule, costs and feedback schedule are unchanged. These descriptive counts are not confidence intervals, independent samples or calibrated guarantees. Repeated or correlated outcomes can overstate the strength of evidence. This offline report does not authorize live routing or override Jev.

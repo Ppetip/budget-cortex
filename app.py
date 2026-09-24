@@ -52,6 +52,22 @@ class Router:
         count = sum(n for _, n in entries)
         return (sum(w for w, _ in entries) + 1) / (count + 2) if count else None
 
+    def selection_evidence(self, context, name, policy):
+        """Snapshot observed support for a quality-based choice; never consume feedback."""
+        if name is None or policy == "cheapest":
+            return None
+        if policy == "adaptive":
+            wins, count = self.stats.get((context, name), (0, 0))
+            scope = "context"
+        elif policy == "strongest":
+            entries = [(w, n) for (_, model), (w, n) in self.stats.items() if model == name]
+            wins, count = sum(w for w, _ in entries), sum(n for _, n in entries)
+            scope = "global"
+        else:
+            raise ValueError("unknown policy")
+        return {"scope": scope, "successes": wins, "observations": count,
+                "smoothed_estimate": (wins + 1) / (count + 2) if count else None}
+
     def choose(self, context, costs, remaining, target):
         if not isinstance(context, str) or not context:
             raise ValueError("context required")
@@ -103,7 +119,8 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
         if model is not None and costs[model] > remaining:
             model = None
         audit = {"feedback_received_before_selection": feedback_received,
-                 "quality_at_selection": router.quality(row["context"], model) if model is not None else None}
+                 "quality_at_selection": router.quality(row["context"], model) if model is not None else None,
+                 "selection_evidence": router.selection_evidence(row["context"], model, policy)}
         if model is None:
             decisions.append({"id": row["id"], "model": None, "cost_micro": 0, **audit})
             continue
