@@ -1,7 +1,7 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 51 offline tests and five CLI paths pass locally; all four hosted checks pass. Jev smoke results remain historical; no new live calls.
+Verified: 53 offline tests and five CLI paths pass locally; hosted checks for this change pending. Jev smoke results remain historical; no new live calls.
 
 Latest: Decisions expose pre-outcome support counts with contextual or global scope.
 
@@ -52,3 +52,5 @@ Selection-evidence verification: https://github.com/Ppetip/budget-cortex/actions
 2026-09-27 07:00 UTC: Shared-runner routing changes passed the existing offline accounting and routing checks; this app implementation and live-provider behavior are unchanged. All five common-runner check routes passed (280 app tests and 28 CLI paths total), plus 32 shared-runner regressions. Check run ffd76d632c9246f4969e0cbbbacb538f. Shared integration is local to the AI Lab workspace, not included in a standalone repository clone. Existing app-source hosted results remain applicable; this documentation update skips redundant hosted CI. No paid calls.
 
 2026-09-27 19:00 UTC: The shared-runner change passes existing routing and accounting checks; observed real-model cost/success remains pending. All five common checks pass (288 app tests, 29 CLI paths), plus 38 shared-runner regressions. Check run 6cbc7ab369f64438ac08e746849d49a7. Shared integration stays local to the AI Lab workspace. App-source hosted evidence is unchanged; documentation-only update skips redundant CI. No live calls.
+
+2026-09-28 15:00 UTC: Official TypeSafe model pricing rechecked; the pinned Jev rate and free output are unchanged. Review window refreshed to September 28 through October 4 UTC, failing closed October 5. One-cent permanent reservation and the existing shared $3 cap/ledger remain unchanged. Added two mocked date-boundary tests; existing mocked calls now use the review-start date. Local check 10d3bcc5c43a42b1b5bbf4b998834a5e passed. Hosted verification pending. No live calls or ledger access during this update; historical smoke results remain historical.
