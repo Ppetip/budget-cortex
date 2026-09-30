@@ -1,9 +1,9 @@
 # Status
 
 Stage: command-line prototype with optional live Jev integration.
-Verified: 53 offline tests and five CLI paths pass locally; all four hosted checks pass. Jev smoke results remain historical; no new live calls.
+Verified: 59 offline tests and six CLI paths pass locally; hosted checks for this change pending. Jev smoke results remain historical; no new live calls.
 
-Latest: Decisions expose pre-outcome support counts with contextual or global scope.
+Latest: An opt-in seeded random baseline reports affordable-choice probabilities without using outcome labels.
 
 Next: Evaluate independently authored shift patterns and observed outcomes; support counts do not establish statistical uncertainty or live reliability.
 
@@ -58,3 +58,5 @@ Selection-evidence verification: https://github.com/Ppetip/budget-cortex/actions
 Pricing-review verification: https://github.com/Ppetip/budget-cortex/actions/runs/36441155045
 
 2026-09-29 23:00 UTC: Shared-runner routing changes pass existing offline accounting and feedback checks; no live routing decision or provider change is made. All five common checks pass (312 app tests, 31 CLI paths), plus 44 shared-runner regressions. Check run 5e891ea4ba6c48658f9dcb20c00c1d26. Shared integration stays local to the AI Lab workspace; app-source hosted evidence is unchanged. Documentation-only update skips redundant CI. No live calls.
+
+2026-09-30 07:01 UTC: Added optional `--random-seed` comparison with sorted affordable candidates, isolated RNG, explicit seed and pre-selection candidate counts/probabilities. No quality-based filtering, learning, provider access or deployment. Existing three-comparison defaults stay unchanged. Six new synthetic regression methods cover repeatability/object order/global RNG isolation, outcome and training leakage, accounting/probabilities over 200 seed-budget combinations, free/empty/exhausted cases, validation before RNG construction and metadata spoofing. This is implementation evidence, not real model quality or logged live exploration. Required common check run 1bf5f19915e04c099b67e44892d830c1 passes 59 tests and six CLI paths. Hosted verification pending. No paid calls or ledger changes.

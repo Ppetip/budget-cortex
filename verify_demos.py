@@ -11,6 +11,7 @@ COMMANDS = [['app.py'], ['jev_workflow.py'], ['app.py', '--learn']]
 COMMANDS.append(['app.py', '--learn', '--feedback-delay', '2'])
 
 COMMANDS.append(['shift.py'])
+COMMANDS.append(['app.py', '--random-seed', '7'])
 
 def main():
     for args in COMMANDS:
@@ -21,6 +22,11 @@ def main():
             raise ValueError("CLI must return a nonempty JSON object")
         if args[0] == "jev_workflow.py" and payload.get("mode") != "dry-run-no-network":
             raise ValueError("Jev CLI default must remain a dry run")
+        if "--random-seed" in args:
+            baseline = payload["comparisons"][-1]
+            assert baseline["policy"] == "random" and baseline["random_seed"] == 7
+            assert baseline["spent_micro"] <= baseline["budget_micro"]
+            assert not baseline["selected_feedback_learning"]
         print("PASS: " + " ".join(args))
 
 if __name__ == "__main__":

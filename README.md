@@ -25,7 +25,7 @@ For commands using a file under `runs/`, create that directory first (`mkdir run
 python -m unittest discover -s tests -v
 ```
 
-53 tests and five offline CLI paths pass on Windows and Linux with Python 3.11 and 3.13 (GitHub Actions).
+59 tests and six offline CLI paths pass locally; hosted verification for the random baseline is pending.
 
 ## Architecture
 
@@ -136,3 +136,31 @@ Each decision includes `selection_evidence`, captured before consuming its own o
 For example, one observed success produces an estimate of 2/3 with `observations: 1`; the sample count makes that limited support visible. Cheapest selections and abstentions report null evidence because no quality-based model selection was made. Existing `quality_at_selection` remains a contextual diagnostic even for the strongest or cheapest baseline. Use the new field to inspect the actual quality scope used for selection.
 
 The routing rule, costs and feedback schedule are unchanged. These descriptive counts are not confidence intervals, independent samples or calibrated guarantees. Repeated or correlated outcomes can overstate the strength of evidence. This offline report does not authorize live routing or override Jev.
+
+## Reproducible random baseline
+
+Run `python app.py --random-seed 7` to append a fourth comparison. With an input
+file, use `python app.py --input examples/outcomes.json --random-seed 7`.
+Existing commands retain their original three comparisons. The Python interface is
+`evaluate(training, requests, policy="random", random_seed=7)`.
+
+For each request, the baseline samples uniformly from model names whose declared
+integer cost fits the remaining offline budget. Names are sorted before sampling,
+so JSON object order does not change the choices. It abstains only when this set is
+empty; zero-cost models remain eligible with a zero budget. Validation of the entire
+input and explicit integer seed happens before the first draw. Invalid input raises
+an error instead of falling back to the built-in demo.
+
+The report records `random_seed`, and each decision records `eligible_model_count`
+and `selection_probability` (1/count, or null for abstention). These describe the
+sampling algorithm conditional on the current affordable set, not calibrated
+success confidence or logs from real exploration. A fixed seed makes this an
+offline repeatable experiment in the same Python runtime. The baseline ignores
+quality targets and training success when choosing; `quality_at_selection` remains
+a training diagnostic and `selection_evidence` is null. It does not learn even if
+`--learn` is supplied. No provider calls, ledger writes or deployment changes occur.
+
+Compare a predeclared collection of seeds before drawing performance conclusions;
+do not pick the best seed after seeing evaluation outcomes. Budget depletion makes
+later eligible sets depend on earlier choices. This is a budget-constrained random
+baseline, not a contextual bandit or a live off-policy evaluation protocol.

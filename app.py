@@ -1,6 +1,7 @@
 """Offline model routing with integer budgets and development-only estimates."""
 import argparse
 import json
+import random
 from pathlib import Path
 
 
@@ -54,7 +55,7 @@ class Router:
 
     def selection_evidence(self, context, name, policy):
         """Snapshot observed support for a quality-based choice; never consume feedback."""
-        if name is None or policy == "cheapest":
+        if name is None or policy in {"cheapest", "random"}:
             return None
         if policy == "adaptive":
             wins, count = self.stats.get((context, name), (0, 0))
@@ -85,20 +86,26 @@ class Router:
         return min(choices)[1] if choices else None
 
 
-def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", learn=False, feedback_delay=0):
+def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", learn=False, feedback_delay=0, random_seed=None):
     if type(budget_micro) is not int or budget_micro < 0:
         raise ValueError("nonnegative integer budget required")
     if type(target) not in (int, float) or not 0 <= target <= 1:
         raise ValueError("target must lie between zero and one")
-    if policy not in {"adaptive", "cheapest", "strongest"}:
+    if policy not in {"adaptive", "cheapest", "strongest", "random"}:
         raise ValueError("unknown policy")
     if type(learn) is not bool or type(feedback_delay) is not int or feedback_delay < 0:
         raise ValueError("boolean learn and nonnegative integer feedback_delay required")
+    if policy == "random":
+        if type(random_seed) is not int:
+            raise ValueError("random policy requires an explicit integer random_seed")
+    elif random_seed is not None:
+        raise ValueError("random_seed is only supported by the random policy")
     validate(training)
     validate(requests)
     if {r["id"] for r in training} & {r["id"] for r in requests}:
         raise ValueError("training/evaluation ID overlap")
     router = Router(training)
+    rng = random.Random(random_seed) if policy == "random" else None
     remaining, wins, answered = budget_micro, 0, 0
     decisions, pending = [], []
     for index, row in enumerate(requests):
@@ -112,6 +119,9 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
             model = router.choose(row["context"], costs, remaining, target)
         elif policy == "cheapest":
             model = min((cost, name) for name, cost in costs.items())[1]
+        elif policy == "random":
+            affordable = sorted(name for name, cost in costs.items() if cost <= remaining)
+            model = rng.choice(affordable) if affordable else None
         else:
             known = [(router.global_quality(name), -cost, name)
                      for name, cost in costs.items() if router.global_quality(name) is not None]
@@ -121,6 +131,9 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
         audit = {"feedback_received_before_selection": feedback_received,
                  "quality_at_selection": router.quality(row["context"], model) if model is not None else None,
                  "selection_evidence": router.selection_evidence(row["context"], model, policy)}
+        if policy == "random":
+            audit.update({"eligible_model_count": len(affordable),
+                          "selection_probability": 1 / len(affordable) if affordable else None})
         if model is None:
             decisions.append({"id": row["id"], "model": None, "cost_micro": 0, **audit})
             continue
@@ -135,7 +148,8 @@ def evaluate(training, requests, budget_micro=22, target=.7, policy="adaptive", 
                 pending.append((index + feedback_delay + 1, row["context"], model, outcome["success"]))
         decisions.append({"id": row["id"], "model": model,
                           "cost_micro": outcome["cost_micro"], "success": outcome["success"], **audit})
-    return {"feedback_delay": feedback_delay, "pending_feedback": len(pending), "policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
+    return {**({"random_seed": random_seed} if policy == "random" else {}),
+            "feedback_delay": feedback_delay, "pending_feedback": len(pending), "policy": policy, "selected_feedback_learning": bool(learn and policy == "adaptive"), "budget_micro": budget_micro, "spent_micro": budget_micro - remaining,
             "answered": answered, "abstained": len(requests) - answered,
             "success_rate_answered": wins / answered if answered else None,
             "success_rate_all": wins / len(requests) if requests else None,
@@ -160,6 +174,7 @@ def main():
     parser.add_argument("--target", type=float, default=.7)
     parser.add_argument("--learn", action="store_true", help="Update adaptive estimates from chosen-model feedback only")
     parser.add_argument("--feedback-delay", type=int, default=0, help="Additional requests before selected feedback arrives")
+    parser.add_argument("--random-seed", type=int, help="Include a uniform affordable-model baseline with this seed")
     args = parser.parse_args()
     if args.input:
         data = json.loads(args.input.read_text(encoding="utf-8"))
@@ -168,8 +183,9 @@ def main():
         train, test = demo()
     print(json.dumps({"data": "synthetic-demo" if not args.input else "user-supplied-offline-outcomes",
                       "limitation": "Fully observed offline simulation. Estimates are not calibrated guarantees. Prices are synthetic micro-units, not provider prices. No live routing or bandit learning yet.",
-                      "comparisons": [evaluate(train, test, args.budget, args.target, p, learn=args.learn, feedback_delay=args.feedback_delay)
-                                      for p in ("adaptive", "cheapest", "strongest")]}, indent=2))
+                      "comparisons": [evaluate(train, test, args.budget, args.target, p, learn=args.learn, feedback_delay=args.feedback_delay,
+                                               random_seed=args.random_seed if p == "random" else None)
+                                      for p in (("adaptive", "cheapest", "strongest") + (("random",) if args.random_seed is not None else ()))]}, indent=2))
 
 
 if __name__ == "__main__":
