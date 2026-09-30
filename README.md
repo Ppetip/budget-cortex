@@ -164,3 +164,19 @@ Compare a predeclared collection of seeds before drawing performance conclusions
 do not pick the best seed after seeing evaluation outcomes. Budget depletion makes
 later eligible sets depend on earlier choices. This is a budget-constrained random
 baseline, not a contextual bandit or a live off-policy evaluation protocol.
+
+## Optional AI Lab route
+
+In the local AI Lab workspace, run `python lab.py run budget-cortex random-baseline`
+to save a comparison of all four policies, or add `--input ABSOLUTE_PATH` for
+explicitly authorized `training`/`evaluation` outcome arrays. The route fixes seed
+7, budget 22 offline units and target 0.7, with no feedback learning; configuration
+fields inside input JSON do not override these settings. The standalone `app.py`
+CLI supports other configurations. The lab runner is local workspace integration
+and is not bundled in this repository.
+
+Use `python lab.py report RUN_ID` to read the comparison. Saved summaries identify
+the seed, costs, answered/abstained requests and success across all requests. A
+single seeded simulation does not establish real model quality or select a best
+seed. Reports and supplied data stay private; no provider call or ledger write
+occurs. Invalid data fails without falling back to a synthetic example.
